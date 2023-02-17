@@ -1,6 +1,6 @@
-v=0;
-x0=[1;2;3;4];
-pre=4;
+v=0;%%%%%%%%%%%
+x0=[1;2;3;4];%%%%%%%%%%%%%
+pre=4;%%%%%%%%%%%%%%
 %pre=number of precision digits
 %set v value here
 
@@ -23,7 +23,7 @@ sys=ss(A,B,C,D);
 G=tf(sys);
 g=G(1)%%%%%%%%%%%;
 [num ,den] = tfdata(g);
-%%%%%%%%%%%%%%%
+
 
 denpoly=poly2sym(den{1},s);
 denpoly1=denpoly*s;
