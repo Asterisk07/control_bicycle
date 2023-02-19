@@ -1,0 +1,343 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+%\graphicspath{ {./images/} }
+\title{}
+\author{
+  Yajat Kapoor - 2021EE30471\\
+  \and
+  Ayushmaan Pandey - 2021EE30709\\
+  \and
+  Harshul Sagar - 2021EE10211\\}
+\date{February 20, 2023}
+
+\begin{document}
+\maketitle\medium\textbf{Analysis of Bicycle Dynamics and Stability Control}
+\vspace{2mm}
+
+\hspace{25mm} Project Report 
+\vspace{2mm}
+
+\hspace{25mm} ELL225-Control Engineering 
+\vspace{2mm}
+
+\hspace{20mm} Professor - Prof. Dr. Subashish Datta
+\section{Abstract Idea}
+\small The aim of this course project is to develop an autopilot for a rider-less bicycle to keep it in vertical upright position. We are considering the following quantities as states: i) roll angle,ii) roll rate, iii)steer angle iv) steer rate and as input we have steering torque and our output is roll angle, the dynamics of the bicycle can be expressed as a fourth order linear model. For this project, we have considered following three fixed velocities: v1 = 0 m/s, v2=1m/s and v3 =5m/s.
+\vspace{5mm}
+
+\section{Introduction}
+\small Bicycles are statically unstable like the inverted pendulum, but it  can be under some conditions, be stable in forward motion. A detailed model of a bicycle is complex because the system has many degrees of freedom and the geometry is very complicated. We assume that the bicycle consists of four rigid parts, specifically, two wheels, a frame, and a front fork with handlebars. We have not taken the influence of other moving parts, such as pedals, chain, and brakes on the dynamics.  We often assume that the forward velocity is constant. To summarize, we simply assume that the bicycle moves on a horizontal plane and that the wheels always maintain contact with the ground.
+\section{Methodology}
+Using Carvallo Whipple bicycle model,
+M\"{q} + CV$\dot{q}$ + (K_o+K_2 v_2)q = T
+
+\vspace{5mm}
+
+$\dot{x}$(t)=A(v(t))\cdot x(t)+ B\cdot u(t),\hspace{5mm}   (1)
+
+\vspace{5mm}
+
+y(t)= C \cdot x(t)+ D\cdot u(t),\hspace{5mm}   (2)
+\vspace{5mm}
+
+
+where \hspace{5mm} 
+ x(t)=\begin{pmatrix}
+    \phi  \\
+    \delta\\
+    \dot{\phi}\\
+    \dot{\delta}
+    
+    \end{pmatrix}
+ \hspace{5mm} u(t)=T_\delta (t) \hspace{5mm}  y(t)=x(t).
+\vspace{5mm}
+
+A=\begin{pmatrix}
+    0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0\\
+    13.67 & 0.225-1.319  \: v^2(t) & -0.164 \: v(t) & -0.552 \: v(t)\\
+    4.857 & 10.81-1.125 \: v^2(t) & 3.621 \: v(t) & -2.388 \: v(t)
+\\
+    \end{pmatrix}
+ \hspace{5mm}    
+ B=\begin{pmatrix}
+    0 \\
+    0\\
+    -0.339\\
+    7.457
+    \end{pmatrix}
+     
+\vspace{5mm}
+% \vspace{50mm}
+   C=\begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0\\
+    0 & 0 & 0 & 1
+    \end{pmatrix}
+\hspace{5mm}     D=\begin{pmatrix}
+    0\\
+    0\\
+    0\\
+    0
+    \end{pmatrix}
+\small 
+Hence, G(s)=C(sI-A)^{-1}B + D
+
+\vspace{5mm}
+\small In the given state space representation we examine the output for different velocities. Consider different cases v=0, v=0.5 and v=5 m/s. We shall be investigating each case individually by putting appropriate value of v in the state space representation and finding out G(s) and then finding the unit step response.
+\vspace{5mm}
+\subsection{Case 1: v=0 m/s} 
+\subsubsection{State Space Model}
+\begin{pmatrix}
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    $$ \ddot{\phi} $$\\
+    $$ \ddot{\delta} $$\\
+    \end{pmatrix}
+ = \begin{pmatrix}
+    0  &       0  &  1.0000    &     0\\
+    0     &   0     &    0   & 1.0000\\
+    13.6700 &   0.2250    &     0    &     0\\
+    4.8570  & 10.8100    &     0     &    0\\
+    \end{pmatrix}
+ \begin{pmatrix}
+    \phi \\
+    \delta \\
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    \end{pmatrix}
+\hspace{2mm}+\hspace{2mm}\begin{pmatrix}
+    0\\
+    0\\
+   -0.3390\\
+    7.4570
+    \end{pmatrix}T
+
+\vspace{2mm}
+y = \begin{pmatrix}
+    1 & 0 & 0 & 0\\
+    0 & 1 & 0 & 0\\
+    0 & 0 & 1 & 0\\
+    0 & 0 & 0 & 1\\
+    \end{pmatrix}
+ \begin{pmatrix}
+    \phi \\
+    \delta \\
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    \end{pmatrix}
+\subsubsection{Transfer Function}
+\small The transfer function comes out to be
+$T(s) = \frac{-0.339 s^2 + 5.342}{s^4 + 3.553e-^{15} s^3 - 24.48 s^2 - 2.842e^{-14} s + 146.7 } $
+\subsubsection{Eigenvalues} 
+Eigenvalues in this case are -3.7432, -3.2355, 3.7432, 3.2355
+\subsubsection{Poles}
+Poles of transfer function are -3.7432,-3.2355,3.7432,3.2355
+\subsubsection{Zeroes}
+Zeroes of transfer function are  3.9698, -3.9698
+\subsubsection{Laplace Transform of Unit Step Response}
+\small The Laplace Transform comes out to be
+\vspace{2 mm}
+$L(s) = \frac{-0.339 s^2 + 5.342}{s^5 + 3.553e^{-15} s^4 - 24.48 s^3 - 2.842e^{-14} s^2 + 146.7 s} $
+\subsubsection{Unit Step Response}
+\(0.005969e^{-3.743t} - 0.02418e^{3.236t} - 0.02418e^{-3.236t} + 0.005969e^{3.743t} + 0.03642\)
+%\vspace{2mm}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{v=0unitstep.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+%\subsubsection{Zero Input Response}
+%$\vspace{2mm}
+
+\subsubsection{Zero Input Response}
+In Laplace domain the frequency Response is as follows
+\vspace{1mm}
+$Y(s)=-\frac{(40(- 200s^3 - 200s^2 + 2117s + 2117)}{8000s^4 - 195840s^2 + 1173439}$$
+
+\vspace{1mm}
+
+$y(t)=0.0113e^{-3.24t} + 0.0215e^{3.24t} + 0.354e^{-3.74t} + 0.613e^{3.74t}$
+
+\vspace{2mm}
+
+Zero input response is shown in the following plot
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{v=0zero input.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\subsection{Case 2: v=1 m/s} 
+\subsubsection{State Space Model}
+\begin{pmatrix}
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    $$ \ddot{\phi} $$\\
+    $$ \ddot{\delta} $$\\
+    \end{pmatrix}
+ = \begin{pmatrix}
+       0    &     0   &  1.0000  &       0\\
+         0    &     0    &     0  &  1.0000\\
+   13.6700   & -1.0940  & -0.1640  & -0.5520\\
+    4.8570  &  9.6850  &  3.6210  & -2.3880\\
+ 
+         
+    \end{pmatrix}
+ \begin{pmatrix}
+    \phi \\
+    \delta \\
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    \end{pmatrix}
+\hspace{2mm}+\hspace{2mm}\begin{pmatrix}
+    0\\
+    0\\
+    -0.3390\\
+    7.4570
+    \end{pmatrix}T
+
+\vspace{2mm}
+\vspace{2mm}
+y = \begin{pmatrix}
+    1 & 0 & 0 & 0\\
+    0 & 1 & 0 & 0\\
+    0 & 0 & 1 & 0\\
+    0 & 0 & 0 & 1\\
+    \end{pmatrix}
+ \begin{pmatrix}
+    \phi \\
+    \delta \\
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    \end{pmatrix}
+\subsubsection{Transfer Function}
+$T(s) = \frac{-0.339 s^2 - 4.926 s - 4.875}{s^4 + 2.552 s^3 - 20.96 s^2 - 27.59 s + 137.7} $
+\subsubsection{Eigenvalues} 
+Eigenvalues in this case are -4.0875 + 0.3256i,  -4.0875 - 0.3256i,  
+  2.8115 + 0.5343i,   2.8115 - 0.5343i
+\subsubsection{Poles}
+Poles of transfer function are -4.0875 + 0.3256i,  -4.0875 - 0.3256i,  
+  2.8115 + 0.5343i,   2.8115 - 0.5343i
+\subsubsection{Zeroes}
+Poles of transfer function are -13.4622, -1.0682
+\vspace{2 mm}
+\subsubsection{Laplace Transform of Unit Step Response}
+\small The Laplace Transform comes out to be
+\vspace{2 mm}
+$T(s) = \frac{-0.339 s^2 - 4.926 s - 4.875}{s^5 + 2.552 s^4 - 20.96 s^3 - 27.59 s^2 + 137.7s} $
+\subsubsection{Unit Step Response}
+$$-e^{-4.088t}cos(0.3256t)(0.007565 + 0.07499i) - e^{-4.088t}cos(0.3256t)(0.007565 - 0.07499i)$$
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{v=1 unit step.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+\subsubsection{Zero Input Response}
+\vspace{1mm}
+
+In Laplace domain the frequency response
+\vspace{1mm}
+$Y(s)=\frac{-(- 500000s^3 - 1776000s^2 + 3276288s + 8182279)}{(500000s^4 + 1276000s^3 - 10482288*s^2 - 13794931s + 68853754)}$
+
+\vspace{2mm}
+
+$y(t)=e^{-4.09t}cos(0.326t)(0.157 + 0.0622i) + e^{-4.09t}cos(0.326t)(0.157 - 0.0622i)+e^{4.09t}cos(0.326t)(0.157 - 0.0622i)+e^{2.81t}cos(0.534t)(0.343 - 0.292i)+e^{4.09t}cos(0.326t)(0.157 - 0.0622i)+e^{2.81t}cos(0.534t)(0.343 - 0.292i) + e^{-4.09t}sin(0.326t)(0.0622 - 0.157i)+e^{-4.09t}sin(0.326t)(0.0622+ 0.157i) + e^{2.81t}sin(0.534t)(0.292 - 0.343i)+e^{2.81t}sin(0.534t)(0.292 + 0.343i)$
+\vspace{1mm}
+
+Zero input response is shown in the following plot
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{v=1 zero input.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\subsection{Case 3: v=5 m/s} 
+\subsubsection{State Space Model}
+\begin{pmatrix}
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    $$ \ddot{\phi} $$\\
+    $$ \ddot{\delta} $$\\
+    \end{pmatrix}
+ = \begin{pmatrix}
+         0  &      0  & 1.0000  &      0\\
+         0  &      0  &      0  & 1.0000\\
+   13.6700 & -32.7500 &  -0.8200 &  -2.7600\\
+    4.8570 & -17.3150 &  18.1050 & -11.9400
+    \end{pmatrix}
+ \begin{pmatrix}
+    \phi \\
+    \delta \\
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    \end{pmatrix}
+\hspace{2mm}+\hspace{2mm}\begin{pmatrix}
+    0 \\
+    0\\
+    -0.339\\
+    7.457
+    \end{pmatrix}T
+
+\vspace{2mm}
+\vspace{2mm}
+y = \begin{pmatrix}
+    1 & 0 & 0 & 0\\
+    0 & 1 & 0 & 0\\
+    0 & 0 & 1 & 0\\
+    0 & 0 & 0 & 1\\
+    \end{pmatrix}
+ \begin{pmatrix}
+    \phi \\
+    \delta \\
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    \end{pmatrix}
+\subsubsection{Transfer Function}
+$T(s) = \frac{-0.339 s^2 - 24.63 s - 250.1}{s^4 + 12.76 s^3 + 63.41 s^2 + 457.3 s - 77.63} $
+\subsubsection{Eigenvalues} 
+Eigenvalues in this case are -10.8598 , -1.0330 + 6.4842i, -1.0330 - 6.4842i,  0.1658 
+\subsubsection{Poles}
+Eigenvalues in this case are -10.8598, -1.0330 + 6.4842i, -1.0330 - 6.4842i,  0.1658 
+\subsubsection{Zeroes}
+Zeroes of transfer function are -60.4476, -12.2043
+\subsubsection{Laplace Transform of Unit Step Response}
+\small The Laplace Transform comes out to be
+\vspace{2 mm}
+$L(s) = \frac{-0.339 s^2 - 24.63 s - 250.1}{s^5 + 12.76 s^4 + 63.41 s^3 + 457.3 s^2 - 77.63s} $
+\subsubsection{Unit Step Response}
+$$3.222 - 0.001362e^{-10.86t} - e^{-1.033t}cos(6.484t)(0.0113 + 0.03794i) - e^{-1.033t}cos(6.484t)(0.0113 - 0.03794i) + e^{-1.033t}sin(6.484t)(0.03794 - 0.0113i) + e^{-1.033t}sin(6.484t)(0.03794 + 0.0113i) - 3.198e^{0.1658t}$$
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{v=5 unit step.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+\subsubsection{Zero Input Response}
+\vspace{1mm}
+
+In Laplace domain the frequency response
+\vspace{1mm}
+
+$Y(s)=\frac{(5(20000s^3 + 275200s^2 + 1070112s + 4969129)}{100000s^4 + 1276000s^3 + 6340560s^2 + 45732257s - 7762930}$
+\vspace{1mm}
+
+$y(t)=0.538e^{0.166t} - 0.00617exp{-10.9t} + e^{-1.03t}cos(6.48t)(0.234 - 0.102i) + e^{-1.03t}cos(6.48t)(0.234 + 0.102i) + e^{-1.03t}sin(6.48t)(0.102 + 0.234i) + e^{-1.03t}sin(6.48t)(0.102 - 0.234i)$
+\vspace{2mm}
+
+Zero input response is shown in the following plot
+% \newpage
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{v=5zeroinput.png}
+    \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+% \clearpage
+\end{document}
