@@ -1,0 +1,856 @@
+\documentclass[notitlepage]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+%\graphicspath{ {./images/} }
+\begin{document}
+\begin{titlepage}
+    \centering
+\includegraphics[width=7cm]{images/logo2.png}    \\
+    \vspace{0.5cm}
+    {\LARGE  Department of Electrical Engineering \\ }
+     {\Large  Indian Institute of Technology Delhi\\
+ }
+
+ \vspace{2cm}
+    {\huge\bfseries Analysis of Bicycle Dynamics }
+    \vspace{0.5cm}
+     {\huge\bfseries and Stability Control}
+
+    
+    \vspace{2cm}
+    {\large  Project Report\\ } 
+    \vspace{0.25cm}
+{\large  ELL225 Control Engineering \\}
+\vspace{0.25cm}
+{\large  Supervisor - Prof. Dr. Subashish Datta }
+
+    
+    \vfill
+    {\large  Students :\\ } 
+    \vspace{0.25cm}
+    {\large  Yajat Kapoor - 2021EE30471\\ } 
+    \vspace{0.25cm}
+{\large Ayushmaan Pandey - 2021EE30709 \\}
+\vspace{0.25cm}
+{\large  Harshul Sagar - 2021EE10211\\ }
+%     \textbf{ Yajat Kapoor - 2021EE30471}
+%     \vspace{0.5cm}
+%     \textbf{ Yajat Kapoor - 2021EE30471}
+%     \vspace{0.5cm}
+%     \textbf{ Yajat Kapoor - 2021EE30471}
+%     \vspace{0.5cm}
+% \textbf{Ayushmaan Pandey - 2021EE30709\\
+% Harshul Sagar - 2021EE10211\\}
+\end{titlepage}
+\pagebreak
+\tableofcontents
+\pagebreak
+\section{Abstract Idea}
+\small The aim of this course project is to develop an autopilot for a rider-less bicycle to keep it in vertical upright position. We are considering the following quantities as states: i) roll angle,ii) roll rate, iii)steer angle iv) steer rate and as input we have steering torque and our output is roll angle, the dynamics of the bicycle can be expressed as a fourth order linear model. For this project, we have considered following three fixed velocities: v1 = 0 m/s, v2=0.5m/s and v3 =5m/s.
+\vspace{1mm}
+
+\section{Introduction}
+\small From a statistical viewpoint ,bicycles are unstable like the inverted pendulum. However,under translation they may be designed to be stable. A detailed model of a bicycle is complex because the system has many degrees of freedom and the mechanics is very intricate. We assume that the bicycle consists of four rigid portions, specifically, two wheels, a frame, and a front fork with handlebars. We have not taken the influence of other moving parts, such as pedals, chain, and brakes on the dynamics.  We often assume that the forward velocity is constant. To summarize, we have assumed that the bicycle moves on a horizontal plane and that the wheels do not lose contact with the surface.
+
+\section{Methodology}
+Using Carvallo Whipple bicycle model,
+M\"{q} + CV$\dot{q}$ + (K_o+K_2 v_2)q = T
+
+\vspace{5mm}
+
+$\dot{x}$(t)=A(v(t))\cdot x(t)+ B\cdot u(t),\hspace{5mm}   (1)
+
+\vspace{5mm}
+
+y(t)= C \cdot x(t)+ D\cdot u(t),\hspace{5mm}   (2)
+\vspace{5mm}
+
+
+where \hspace{5mm} 
+ x(t)=\begin{pmatrix}
+    \phi  \\
+    \delta\\
+    \dot{\phi}\\
+    \dot{\delta}
+    
+    \end{pmatrix}
+ \hspace{5mm} u(t)=T_\delta (t) \hspace{5mm}  y(t)=x(t).
+\vspace{5mm}
+
+A=\begin{pmatrix}
+    0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0\\
+    13.67 & 0.225-1.319  \: v^2(t) & -0.164 \: v(t) & -0.552 \: v(t)\\
+    4.857 & 10.81-1.125 \: v^2(t) & 3.621 \: v(t) & -2.388 \: v(t)
+\\
+    \end{pmatrix}
+ \hspace{5mm}    
+ B=\begin{pmatrix}
+    0 \\
+    0\\
+    -0.339\\
+    7.457
+    \end{pmatrix}
+     
+\vspace{5mm}
+% \vspace{50mm}
+   C=\begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0\\
+    0 & 0 & 0 & 1
+    \end{pmatrix}
+\hspace{5mm}     D=\begin{pmatrix}
+    0\\
+    0\\
+    0\\
+    0
+    \end{pmatrix}
+\small 
+Hence, G(s)=C(sI-A)^{-1}B + D
+
+\vspace{5mm}
+\small In the given state space representation we examine the output for different velocities. Consider different cases v=0, v=0.5 and v=5 m/s. We shall be investigating each case individually by putting appropriate value of v in the state space representation and finding out G(s) and then finding the unit step response.
+\vspace{5mm}
+\subsection{Case 1: v=0 m/s} 
+\subsubsection{State Space Model}
+\begin{pmatrix}
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    $$ \ddot{\phi} $$\\
+    $$ \ddot{\delta} $$\\
+    \end{pmatrix}
+ = \begin{pmatrix}
+    0  &       0  &  1.0000    &     0\\
+    0     &   0     &    0   & 1.0000\\
+    13.6700 &   0.2250    &     0    &     0\\
+    4.8570  & 10.8100    &     0     &    0\\
+    \end{pmatrix}
+ \begin{pmatrix}
+    \phi \\
+    \delta \\
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    \end{pmatrix}
+\hspace{2mm}+\hspace{2mm}\begin{pmatrix}
+    0\\
+    0\\
+   -0.3390\\
+    7.4570
+    \end{pmatrix}T
+
+\vspace{2mm}
+y = \begin{pmatrix}
+    1 & 0 & 0 & 0\\
+    0 & 1 & 0 & 0\\
+    0 & 0 & 1 & 0\\
+    0 & 0 & 0 & 1\\
+    \end{pmatrix}
+ \begin{pmatrix}
+    \phi \\
+    \delta \\
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    \end{pmatrix}
+\subsubsection{Transfer Function}
+\small The transfer function comes out to be
+$T(s) = \frac{-0.339 s^2 + 5.342}{s^4 + 3.553e-^{15} s^3 - 24.48 s^2 - 2.842e^{-14} s + 146.7 } $
+\subsubsection{Eigenvalues} 
+Eigenvalues in this case are -3.7432, -3.2355, 3.7432, 3.2355
+\subsubsection{Poles}
+Poles of transfer function are -3.7432,-3.2355,3.7432,3.2355
+\subsubsection{Zeroes}
+Zeroes of transfer function are  3.9698, -3.9698
+% \subsubsection{Laplace Transform of Unit Step Response}
+% \small The Laplace Transform comes out to be
+% \vspace{2 mm}
+% $L(s) = \frac{-0.339 s^2 + 5.342}{s^5 + 3.553e^{-15} s^4 - 24.48 s^3 - 2.842e^{-14} s^2 + 146.7 s} $
+\pagebreak
+\subsubsection{Unit Step Response}
+\(y(t)=0.005969e^{-3.743t} - 0.02418e^{3.236t} - 0.02418e^{-3.236t} + 0.005969e^{3.743t} + 0.03642\)
+%\vspace{2mm}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{v=0unitstep.png}
+    % \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+%\subsubsection{Zero Input Response}
+%$\vspace{2mm}
+
+\pagebreak
+\subsubsection{Zero Input Response}
+% In Laplace domain the frequency Response is as follows
+% \vspace{1mm}
+% $Y(s)=-\frac{(40(- 200s^3 - 200s^2 + 2117s + 2117)}{8000s^4 - 195840s^2 + 1173439}$$
+
+\vspace{1mm}
+
+$y(t)=0.0113e^{-3.24t} + 0.0215e^{3.24t} + 0.354e^{-3.74t} + 0.613e^{3.74t}$
+
+\vspace{2mm}
+
+Zero input response is shown in the following plot
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth]{v=0zero input.png}
+    % \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\newpage
+\subsubsection{Stability}
+\begin{enumerate}
+\item \textbf{Asymptotically Stable}
+
+As 2  eigenvalues are in Right Half of Complex Plane so natural response doesn't go to 0 at $t\rightarrow{\infty}$ so  asymptotically unstable
+
+\item \textbf{BIBO Stable}
+
+\vspace{1mm}
+As 2 poles are in Right Half of Complex Plane so it is not BIBO stable as impulse response  is not absolutely integrable.
+\end{enumerate}
+
+
+\vspace{2mm}
+
+% \newpage
+% \subsubsection{Bode plot}
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=\linewidth]{images/bode_v=0.png}
+%      % \caption{Caption}
+%      \label{fig:my_label}
+%  \end{figure} 
+
+
+\subsubsection{Nyquist plot}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/nyquist_v=0.png}
+     \caption{Nyquist Plot for v=0 m/s}
+     \label{fig:my_label}
+ \end{figure}
+\small \noindent By Cauchy's criteria we can observe that N = 0 , P = 2 hence Z = N + P = 0 + 2 = 2 . Hence the closed loop system is unstable.
+\newpage
+\subsubsection{Bode plot}
+\begin{figure}[h]
+     \centering
+     \includegraphics[width=1.25\linewidth]{images/bode_plot_new_v=0.png}
+      \caption{Bode Plot for v=0 m/s}
+      \label{fig:my_label}
+  \end{figure} 
+Phase Margin=$\infty$  \hspace{33mm} Gain Margin=$\infty$ 
+
+\vspace{1mm}
+Phase Cross over frequency=Not defined \hspace{2mm} Gain Cross over frequency=Not defined
+% \vspace{15mm}
+\newpage
+\subsubsection{Root Locus plot}
+\begin{figure}[h]
+     \centering
+    \includegraphics[width=1\linewidth]{images/root_locus_v=0.png}
+     \caption{Root locus plot for v=0 m/s}
+     \label{fig:my_label}
+ \end{figure}
+
+% \pagebreak
+
+
+\newpage
+\subsection{Case 2: v=3.5 m/s} 
+\subsubsection{State Space Model}
+\begin{pmatrix}
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    $$ \ddot{\phi} $$\\
+    $$ \ddot{\delta} $$\\
+    \end{pmatrix}
+ = \begin{pmatrix}
+       0    &     0   &  1.0000  &       0\\
+         0    &     0    &     0  &  1.0000\\
+   13.6700  & -15.9328  & -0.5740 &  -1.9320\\
+   4.8570  & -2.9712   & 12.6735  & -8.3580\\
+ 
+         
+    \end{pmatrix}
+ \begin{pmatrix}
+    \phi \\
+    \delta \\
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    \end{pmatrix}
+\hspace{2mm}+\hspace{2mm}\begin{pmatrix}
+    0\\
+    0\\
+  -0.3390\\
+    7.4570
+    \end{pmatrix}T
+
+\vspace{2mm}
+\vspace{2mm}
+y = \begin{pmatrix}
+    1 & 0 & 0 & 0\\
+    0 & 1 & 0 & 0\\
+    0 & 0 & 1 & 0\\
+    0 & 0 & 0 & 1\\
+    \end{pmatrix}
+ \begin{pmatrix}
+    \phi \\
+    \delta \\
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    \end{pmatrix}
+\subsubsection{Transfer Function}
+$T(s) = \frac{  -0.339 s^2 - 17.24 s - 119.8}{s^4 + 8.932 s^3 + 18.58 s^2 + 98.76 s + 36.77}$
+\subsubsection{Eigenvalues} 
+Eigenvalues in this case are -8.0753 + 0.0000i, -0.2301 + 3.3809i, 
+ -0.2301 - 3.3809i, -0.3965 + 0.0000i
+\subsubsection{Poles}
+Poles of transfer function are  -8.0753 + 0.0000i, -0.2301 + 3.3809i, -0.2301 - 3.3809i, -0.3965 + 0.0000i
+
+  %2.8115 + 0.5343i,   2.8115 - 0.5343i
+\subsubsection{Zeroes}
+Zeroes of transfer function are   -42.5497, -8.3066;
+\vspace{2 mm}
+% \subsubsection{Laplace Transform of Unit Step Response}
+% \small The Laplace Transform comes out to be
+% \vspace{2 mm}
+% $L(s) = \frac{-0.339 s^2 - 2.463 s + 2.788}{s^5 + 1.276 s^4 - 23.6 s^3 - 15.66 s^2 + 144.4 s} $
+
+\newpage
+\subsubsection{Unit Step Response}
+$y(t)=3.24e^{-0.3965t} - 0.0005974e^{-8.075t} + e^{-0.2301t}cos(3.381t)(0.009598 + 0.1899i) + e^{-0.2301t}cos(3.381t)(0.009598 - 0.1899i) + e^{-0.2301t}sin(3.381t)(0.1899 - 0.009598i) + e^{-0.2301t}sin(3.381t)(0.1899 + 0.009598i) - 3.259
+ $
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth]{images/unit_step_v=3.5.png}
+    % \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\newpage
+\subsubsection{Zero Input Response}
+\vspace{1mm}
+
+% In Laplace domain the frequency response
+% \vspace{1mm}
+% % -(- 8000000*s^3 - 18208000*s^2 + 72943152*s + 114705713)/(8000000*s^4 + 10208000*s^3 - 188809152*s^2 - 125241245*s + 1155494266)
+% $Y(s)=\frac{-(- 8000000^3 - 18208000^2 + 72943152 + 114705713)}{(8000000^4 + 10208000^3 - 188809152*s^2 - 125241245 + 1155494266)}$
+
+% \vspace{2mm}
+%1.3*exp(3.2844*t) - 0.6*exp(3.039*t) + exp(-3.8*t)*cos(0.18*t)*(0.16 + 0.088i) + exp(-3.8*t)*cos(0.18*t)*(0.17 - 0.088i) - exp(-3.8*t)*sin(0.18*t)*(0.088 - 0.16i) - exp(-3.8*t)*sin(0.18*t)*(0.088 + 0.17i)
+
+% \(
+% y(t)=1.3e^{3.2844t}-0.6e^{3.039t}+e^{-3.8t}cos(0.18t)(0.35)-e^{-3.8t}sin(0.18t)(0.176)
+% \)
+
+$y(t)=e^{(t*(- 0.23 - 3.4i))}*(1.1 + 0.44i) + e^{(t*(- 0.23 + 3.4i))}*(1.1 - 0.44i) - e^{(-8.1*t)}*(4.0*10^{-3} + 2.7*10^{-19}i) - e^{(-0.4*t)}*(1.3 - 1.6*10^{-16}i) - (5.3 + 4.7*10{-17}i)
+$
+% $y(t)=e^{-4.09t}cos(0.326t)(0.157 + 0.0622i) + e^{-4.09t}cos(0.326t)(0.157 - 0.0622i)+e^{4.09t}cos(0.326t)(0.157 - 0.0622i)+e^{2.81t}cos(0.534t)(0.343 - 0.292i)+e^{4.09t}cos(0.326t)(0.157 - 0.0622i)+e^{2.81t}cos(0.534t)(0.343 - 0.292i) + e^{-4.09t}sin(0.326t)(0.0622 - 0.157i)+e^{-4.09t}sin(0.326t)(0.0622+ 0.157i) + e^{2.81t}sin(0.534t)(0.292 - 0.343i)+e^{2.81t}sin(0.534t)(0.292 + 0.343i)$
+
+\vspace{3mm}
+
+
+Zero input response is shown in the following plot
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1.2\linewidth]{images/zero_input_v=3.5.png}
+    % \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\newpage
+\subsubsection{Stability}
+\begin{enumerate}
+\item \textbf{Asymtodically Stable}
+As all  eigenvalues are in Left Half of Complex Plane so natural response  goes to 0 at $t\rightarrow{\infty}$ so asymptodically stable
+
+\item \textbf{BIBO Stable}
+
+As all poles are in Left Half of Complex Plane so it is  BIBO stable as impulse response is absolutely integrable.
+
+\end{enumerate}
+% \subsubsection{Asymtodically Stable}
+% As all  eigen values are in Left Half of Complex Plane so natural response  goes to 0 at $t\rightarrow{\infty}$ so asymptodically stable
+
+% \subsubsection{BIBO Stable}
+% As all poles are in Left Half of Complex Plane so it is  BIBO stable as impulse response is absolutely integrable.
+
+\subsubsection{Nyquist plot}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/nyquist_v=3.5.png}
+     \caption{Nyquist Plot for v=3.5 m/s}
+     \label{fig:my_label}
+ \end{figure}
+
+\small \noindent By Cauchy's criteria we can observe that N = 1 , P = 0 hence Z = N + P = 0 + 1 = 1 . Hence the closed loop system is unstable.
+
+\newpage
+\subsubsection{Bode Plot}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/bode_plot_new_v=3.5.png}
+     \caption{Bode Plot for v=3.5 m/s}
+     \label{fig:my_label}
+ \end{figure}
+Phase Margin=-72.8$\degree$  \hspace{25mm} Gain Margin=-8.73 dB
+
+\vspace{1mm}
+Phase Cross over frequency=0 rad/s \hspace{2mm} Gain Cross over frequency=1.16 rad/s
+
+\newpage
+\subsubsection{Root Locus}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/rootlocus_v=3.5.png}
+     \caption{root locus Plot for v=3.5 m/s}
+     \label{fig:my_label}
+ \end{figure}
+% \subsubsection{Nyquist plot}
+
+\newpage
+\subsection{Case 3: v=5 m/s} 
+\subsubsection{State Space Model}
+\begin{pmatrix}
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    $$ \ddot{\phi} $$\\
+    $$ \ddot{\delta} $$\\
+    \end{pmatrix}
+ = \begin{pmatrix}
+         0  &      0  & 1.0000  &      0\\
+         0  &      0  &      0  & 1.0000\\
+   13.6700 & -32.7500 &  -0.8200 &  -2.7600\\
+    4.8570 & -17.3150 &  18.1050 & -11.9400
+    \end{pmatrix}
+ \begin{pmatrix}
+    \phi \\
+    \delta \\
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    \end{pmatrix}
+\hspace{2mm}+\hspace{2mm}\begin{pmatrix}
+    0 \\
+    0\\
+    -0.339\\
+    7.457
+    \end{pmatrix}T
+
+\vspace{2mm}
+\vspace{2mm}
+y = \begin{pmatrix}
+    1 & 0 & 0 & 0\\
+    0 & 1 & 0 & 0\\
+    0 & 0 & 1 & 0\\
+    0 & 0 & 0 & 1\\
+    \end{pmatrix}
+ \begin{pmatrix}
+    \phi \\
+    \delta \\
+    $$ \dot{\phi} $$\\
+    $$ \dot{\delta} $$\\
+    \end{pmatrix}
+\subsubsection{Transfer Function}
+$T(s) = \frac{-0.339 s^2 - 24.63 s - 250.1}{s^4 + 12.76 s^3 + 63.41 s^2 + 457.3 s - 77.63} $
+\subsubsection{Eigenvalues} 
+Eigenvalues in this case are -10.8598 , -1.0330 + 6.4842i, -1.0330 - 6.4842i,  0.1658 
+\subsubsection{Poles}
+Eigenvalues in this case are -10.8598, -1.0330 + 6.4842i, -1.0330 - 6.4842i,  0.1658 
+\subsubsection{Zeroes}
+Zeroes of transfer function are -60.4476, -12.2043
+% \subsubsection{Laplace Transform of Unit Step Response}
+% \small The Laplace Transform comes out to be
+% \vspace{2 mm}
+% $L(s) = \frac{-0.339 s^2 - 24.63 s - 250.1}{s^5 + 12.76 s^4 + 63.41 s^3 + 457.3 s^2 - 77.63s} $
+
+\newpage
+\subsubsection{Unit Step Response}
+$$y(t)=3.222 - 0.001362e^{-10.86t} - e^{-1.033t}cos(6.484t)(0.0226) + e^{-1.033t}sin(6.484t)(0.07588) - 3.198e^{0.1658t}$$
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1.25\linewidth]{v=5 unit step.png}
+    % \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+
+\newpage
+\subsubsection{Zero Input Response}
+\vspace{1mm}
+
+% In Laplace domain the frequency response
+% \vspace{1mm}
+
+% $Y(s)=\frac{(5(20000s^3 + 275200s^2 + 1070112s + 4969129)}{100000s^4 + 1276000s^3 + 6340560s^2 + 45732257s - 7762930}$
+\vspace{1mm}
+
+$y(t)=0.538e^{0.166t} - 0.00617e^{-10.9t} + e^{-1.03t}cos(6.48t)(0.468)+e^{-1.03t}sin(6.48t)(0.204)$
+\vspace{2mm}
+
+Zero input response is shown in the following plot
+% \newpage
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.25\linewidth]{v=5zeroinput.png}
+    % \caption{Caption}
+    \label{fig:my_label}
+\end{figure}
+% \clearpage
+\vspace{3mm}
+
+\newpage
+\subsubsection{Stability}
+\begin{enumerate}
+\item \textbf{Asymptotically Stable}
+As 1  eigenvalue are in Right Half of Complex Plane so natural response doesn't go to 0 at $t\rightarrow{\infty}$ so  asymptotically unstable
+\item \textbf{BIBO Stable}
+
+As 1 pole of the transfer function is in Right Half of Complex Plane so it is not BIBO stable as impulse response is not absolutely integrable( so is BIBO unstable.
+\end{enumerate}
+% \subsubsection{Asymptotically Stable}
+% As 1  eigenvalue are in Right Half of Complex Plane so natural response doesn't go to 0 at $t\rightarrow{\infty}$ so  asymptotically unstable
+
+
+% \subsubsection{BIBO Stable}
+% As 1 pole of the transfer function is in Right Half of Complex Plane so it is not BIBO stable as impulse response is not absolutely integrable so is BIBO unstable.
+% \subsection{Stability}
+% \subsubsection{Asymptotically Stable}
+% As 1  eigenvalue are in Right Half of Complex Plane so natural response doesn't go to 0 at $t\rightarrow{\infty}$ so  asymptotically unstable
+
+
+% \subsubsection{BIBO Stable}
+% As 1 pole of the transfer function is in Right Half of Complex Plane so it is not BIBO stable as impulse response is not absolutely integrable so is BIBO unstable.
+
+\subsubsection{Nyquist Plot}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/nyquist_v=5.png}
+     \caption{Nyquist Plot for v=5 m/s}
+     \label{fig:my_label}
+ \end{figure}
+ \small \noindent By Cauchy's criteria we can observe that N = 0 , P = 1 hence Z = N + P = 0 + 1 = 1 . Hence the closed loop system is unstable.
+
+\newpage
+\subsubsection{Bode Plot}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.3\linewidth]{images/bode_plot_new_v=5.png}
+     \caption{Bode Plot for v=5 m/s}
+     \label{fig:my_label}
+ \end{figure}
+Phase Margin=-109$\degree$  \hspace{30.5mm} Gain Margin=$\infty$
+
+\vspace{1mm}
+Phase Cross over frequency=Not defined \hspace{2mm} Gain Cross over frequency=0.511 rad/s
+\newpage
+\subsubsection{Root Locus}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/root_locus_v=5.png}
+    \caption{root locus Plot for v=5 m/s}
+    \label{fig:my_label}
+\end{figure}
+
+% \newpage
+% \subsubsection{Nyquist plot}
+% % \begin{figure}[h]
+% %     \centering
+% %     \includegraphics[width=\linewidth]{images/nyquist_v=5.png}
+% %     % \caption{Caption}
+% %     \label{fig:my_label}
+% % \end{figure}
+
+% % \small By Cauchy's criteria we can observe that N= P= hence Z=N+P= .Hence the closed loop system is unstable.
+
+% \subsection{Link for source code}
+% Link for source code-https://tinyurl.com/225proj
+
+\newpage
+\section{Controller Design}
+\subsection{v=0 m/s}
+\vspace{5mm}
+\small For v=0 we tried to develop a PID controller, however if we consider the root locus plot of the compensated system some branch shall always lie in the right half plane leading to the system being unstable. One alternative to this is pole cancellation, i.e adding a zero at the same location so as to nullify it.While this is mathematically feasible but physically there would also be some error in realisation of such a compensator. Hence some branch of the root locus is bound to get trapped in the right half plane which will cause the system to be unstable and therefore such a design is not feasible.
+
+
+\subsection{v=3.5m/s}
+\vspace{5mm}
+\subsubsection{Design specification}
+% write text here TK
+\begin{center}
+Damping ratio\\
+$\zeta$=0.075
+\end{center}
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[width=1.25\linewidth]{images/damping_design_requirement_v=3.5.jpeg}
+%      \caption{Damping ratio design requirement}
+%      \label{fig:my_label}
+%  \end{figure}
+% idhar ye :thi
+\begin{center}
+Settling time\\
+\small $t_s  <$ 15.5s
+\end{center}
+
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[width=1.25\linewidth]{images/settling_time_design_requirement_v=3.5.jpeg}
+%      \caption{Settling time design requirement}
+%      \label{fig:my_label}
+%  \end{figure}
+ 
+\subsubsection{Analysis}
+\small If we look at the root locus plot, then it can be inferred that for small values of K all the closed loop poles shall lie on the left half plane.Hence, a proportional controller shall suffice in this case. Note that, for a proportional controller once damping ratio is fixed we shall find the point of intersection of the damping ratio line with the root locus. From the location of the dominant pole, we can use its real part to find the settling time. Hence once damping ratio is fixed, settling time takes a unique value unlike in the case of a PID controller where damping ratio and settling time can be chosen independently.
+\small For the chosen value of damping ratio and settling time we got the value of the proportional controller K as 0.03721.One conclusion that we noticed was that our expected values of settling time slightly differed from the theoretical value.Since the real part of dominant pole is -0.254, we expect a settling time of 4/0.254 = 15.75. However the settling time upon examining the step response is around 11.6 seconds. This is because we have a pole very close to the dominant poles. Hence the second order approximation, under which we neglect the more negative poles will not work very effectively in this case. This is why we are obtaining slight difference in the value of settling time calculated theoretically using the dominant pole location and the value obtained from the step response.
+\vspace{3mm}
+$C(s) = 0.03721$
+\pagebreak
+\subsubsection{Design specification}
+% write text here TK
+\begin{center}
+Damping ratio\\
+$\zeta$=0.075
+\end{center}
+
+     
+
+% likh diya niche after figure kaunsa fig
+
+% damping_design_requirement_v=3.5.jpeg
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/damping_design_requirement_v=3.5.jpeg}
+     \caption{Damping ratio design requirement}
+     \label{fig:my_label}
+ \end{figure}
+\pagebreak
+% idhar ye :thi
+\begin{center}
+Settling time\\
+\small $t_s  <$ 15.5s
+\end{center}
+% werg
+ \begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/settling_time_design_requirement_v=3.5.jpeg}
+     \caption{Settling time design requirement}
+     \label{fig:my_label}
+ \end{figure}
+ % wergewg
+\pagebreak
+\subsubsection{Compensator Design}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/compensator_v=3.5.jpeg}
+     % \caption{Caption}
+     \label{fig:my_label}
+ \end{figure}
+ \pagebreak
+\subsubsection{Root Locus plot of Compensated System}
+% v=3.5_controller_grid_root_locus.jpeg
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/v=3.5_controller_grid_root_locus.jpeg}
+     % \caption{Caption}
+     \label{fig:my_label}
+ \end{figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/root_locus_v=3.5_controller_1.jpeg}
+     % \caption{Caption}
+     \label{fig:my_label}
+ \end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/root_locus_v=3.5_controller_2.jpeg}
+     % \caption{Caption}
+     \label{fig:my_label}
+ \end{figure}
+
+ \pagebreak
+ \subsubsection{Step response plots of Compensated System}
+ \begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/settling_time_v=3.5.jpeg}
+     % \caption{Caption}
+     \label{fig:my_label}
+ \end{figure}
+
+ \begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/rise_time_v=3.5_step.jpeg}
+     % \caption{Caption}
+     \label{fig:my_label}
+ \end{figure}
+
+ \begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/final_value_v=3.5_step.jpeg}
+     % \caption{Caption}
+     \label{fig:my_label}
+ \end{figure}
+\subsection{v=5m/s}
+
+\subsubsection{Design specification}
+% write text here TK
+\begin{center}
+Damping ratio\\
+$\zeta$=0.045
+\end{center}
+
+% idhar ye :thi
+\begin{center}
+Settling time\\
+\small $t_s  <$ 27s
+\end{center}
+
+
+
+\subsubsection{Analysis}
+\small Since a branch of the root locus lies completely in the right half plane, it is impossible to get a stable closed loop system by using only a proportional controller.
+Hence we shall be using a PID controller. First, we made the PD compensator for which we found the suitable value of zero that is to be added to get the suitable damping ratio and settling time. It turns out to be in the right half plane (approximately 0.9). A possible design scheme in order to realise such a compensator using Op amps is shown below. After doing so we design a PI compensator with a pole at origin and zero close to the origin.
+
+
+\vspace{3mm}
+
+\noindent Hence $C(s) = \frac{{(1-1.1s)}{(1+5s)}}{s} $
+
+\small \noindent The below circuit solves to $\frac{V0(s)}{V1(s)}$ = -(1-sRC) hence maybe used for synthesising compensator with pole in RHP.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/Screenshot 2023-05-11 at 00.08.07.png}
+     % \caption{Caption}
+     \label{fig:my_label}
+ \end{figure}
+% we need to go in order else my careful placement of images will get ruined
+% ima write the design specs too ig :(
+% ima ? what is ima  what do you want me to do tell clearly = im gonna
+% what do you want me to do tell clearly
+% Harshul write design specifciation also please
+% ayushmman i do not know tha values also this is not introduction first we should have design specification then what im writing
+
+
+% what is this if not introdcution?
+% kind of analysis yes any name is fine but after design specification! ill shift it later 
+% renamed to analysis!
+
+\newpage
+\subsubsection{Design specification}
+ \center Damping Ratio
+
+\vspace{1mm}
+$\zeta$$=$0.045
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/damping_ratio_design_requirment_v=5.jpeg}
+     % \caption{Caption}
+     \label{fig:my_label}
+ \end{figure}
+
+\newpage
+Settling Time$<$27 seconds
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/settling_time_design_requirement_v=5.jpeg}
+     % \caption{Caption}
+     \label{fig:my_label}
+ \end{figure}
+
+\newpage
+\subsubsection{Compensator Design}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/compensator_v=5.jpeg}
+     % \caption{Caption}
+     \label{fig:my_label}
+ \end{figure}
+
+\newpage
+\subsubsection{Root Locus plot of Compensated System}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/controller_root_locus_v=5.jpeg}
+     % \caption{Caption}
+     \label{fig:my_label}
+ \end{figure}
+
+ \begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/controller_root_locus_v=5_1.jpeg}
+     % \caption{Caption}
+     \label{fig:my_label}
+ \end{figure}
+
+ \newpage
+
+ \subsubsection{Step response plots of Compensated System}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/step_response_without_any_caharcteristics_displayed_v=5.jpeg}
+    % \caption{Step Response}
+     \label{fig:my_label}
+ \end{figure}
+
+ \begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/settling_time_v=5_step.jpeg}
+     % \caption{Figure:2 Settling Time}
+     \label{fig:my_label}
+ \end{figure}
+
+ \begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/peak_value_v=5_step.jpeg}
+     % \caption{ Peak Time}
+     \label{fig:my_label}
+ \end{figure}
+
+ \begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/rise_time_v=5_step.jpeg}
+     % \caption{ Rise Time}
+     \label{fig:my_label}
+ \end{figure}
+
+\newpage
+Steady State error is now made 0 using PI controller and shown in below image.
+ \begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.25\linewidth]{images/final_value_v=5_step.jpeg}
+     % \caption{ Steady State Value}
+     \label{fig:my_label}
+ \end{figure}
+
+\newpage
+% \vspace{15000mm}
+\section{Conclusion}
+\begin{itemize}
+\item State space representation of Carvallo Whipple bicycle model was obtained.
+
+\item The transfer functions, along with poles,zeroes and eigen values were obtained for $v_1$ = 0 m/s, $v_2$ = 1m/s and $v_3$ = 6 m/s.
+
+\item Computed time response for zero input and unit step input with the assumed initial state.
+
+\item Asymptomatic stability and BIBO stability of the system for the three velocities was discussed .
+
+\item Nyquist plots, Bode plots and Root Locus plots were drawn. The Root Locus  depicts the locus of closed loop poles when we vary gain,while Bode plots and Nyquist plots are for open loop transfer function and with it we can predict the closed loop system stability.
+
+\item \textbf{sisotool} in Matlab was used to design the controllers, taking unity negative feedback. The controller for  $v_1$ = 0 m/s could not be made, except using pole zero cancellation. The controllers for other two velocities were designed and implemented.
+
+\end{itemize}
+ 
+% \newpage
+
+% \section{Link for source code}
+% Link for source code-https://tinyurl.com/225proj
+\end{document}
+
+% Ayushmaan add the images it will save time if you can!
+
+% sure-Ayushmaan
+ % harshul pls add the next section so that i can add images for root locus and all in controller part for v=5
+
+% harshul i inserted all the images for controller of v=5 and created the subsections as well so pls write the theory in it .
