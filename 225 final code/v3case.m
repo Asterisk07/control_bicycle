@@ -44,8 +44,8 @@ numnew=sym2poly(numpoly1) ;
 disp("location of added zero:")
 
 
-% open loop transfer function after adding PI controller
-disp("open loop transfer function after adding PI controller")
+% open loop transfer function after adding PD controller
+disp("open loop transfer function after adding PD controller")
 g1=tf(numnew,den{1})
 
 
@@ -58,15 +58,15 @@ g1=tf(numnew,den{1})
 
  
 
-  disp("closed loop transfer function after adding the PI controller:")
-  % closed loop transfer function after adding the PI controller
+  disp("closed loop transfer function after adding the PD controller:")
+  % closed loop transfer function after adding the PD controller
   h=minreal((g1/(g1+1)))
  
-  disp("closed loop zeroes after adding PI controller:")
-  % closed loop zeroes after adding PI controller
+  disp("closed loop zeroes after adding PD controller:")
+  % closed loop zeroes after adding PD controller
   zero(h) 
 
-disp("closed loop pole after adding PI controller:")
+disp("closed loop pole after adding PD controller:")
   pole(h)
  disp("or:")
    z1=zero(1+g1)
