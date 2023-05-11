@@ -66,3 +66,4 @@ disp("closed loop pole after adding  controller:")
 
 
    display("here we took a value as example to show that how stability can be achieved. Exact values for proprtional controller are found using sisotool. Please load the v2controller.mat session file into sisotool")
+% sisotool();
