@@ -37,7 +37,7 @@ controller=c
 
 
 
-% open loop transfer function after adding PI controller
+% open loop transfer function after adding Proportional controller
 disp("open loop transfer function after adding  controller")
 g1=g*controller
 
@@ -52,11 +52,11 @@ h0=(g/(1+g));
  
 
   disp("closed loop transfer function after adding the  controller:")
-  % closed loop transfer function after adding the PI controller
+  % closed loop transfer function after adding the Proportional controller
   h=minreal((g1/(g1+1)))
  
   disp("closed loop zeroes after adding  controller:")
-  % closed loop zeroes after adding PI controller
+  % closed loop zeroes after adding Proportional controller
   zero(h) 
 
 disp("closed loop pole after adding  controller:")
