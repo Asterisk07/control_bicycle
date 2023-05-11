@@ -71,4 +71,4 @@ disp("closed loop pole after adding PD controller:")
  disp("or:")
    z1=zero(1+g1)
    display("here we took a value as example to show that how stability can be achieved. Exact values for  controller are found using sisotool. Please load the v3controller.mat session file into sisotool")
-% sisotool();
+% sisotool(); uncomment for sisotool
